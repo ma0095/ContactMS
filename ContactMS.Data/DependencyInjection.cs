@@ -20,6 +20,7 @@ namespace ContactMS.Data
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             _ = services.AddTransient<IContact, Contact>();
+            _ = services.AddTransient<IContactDetail, ContactDetail>();
 
             return services;
         }

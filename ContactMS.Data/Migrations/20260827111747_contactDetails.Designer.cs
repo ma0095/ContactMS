@@ -3,6 +3,7 @@ using ContactMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ContactMS.Data.Migrations
 {
     [DbContext(typeof(ContactMSContext))]
-    partial class ContactMSContextModelSnapshot : ModelSnapshot
+    [Migration("20260827111747_contactDetails")]
+    partial class contactDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +63,7 @@ namespace ContactMS.Data.Migrations
 
                     b.HasIndex("ContactId");
 
-                    b.ToTable("ContactDetails", (string)null);
+                    b.ToTable("ContactDetail");
                 });
 
             modelBuilder.Entity("ContactMS.Data.Entities.ContactDetail", b =>

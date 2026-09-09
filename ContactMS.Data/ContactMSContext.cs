@@ -23,12 +23,15 @@ namespace ContactMS.Data
         }
 
         public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<ContactDetail> ContactDetails { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //for fluent API approach and also we can create a separate mapper for each entity
             #region Mapping
             _ = modelBuilder.ApplyConfiguration(new ContactMap());
+            _ = modelBuilder.ApplyConfiguration(new ContactDetailMap());
 
 
             #endregion
