@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ContactMS.DTOs\ContactMS.DTOs.csproj" />
+    <ProjectReference Include="..\ContactMS.Framework.Extensions\ContactMS.Framework.Extensions.csproj" />
+  </ItemGroup>
+
 </Project>

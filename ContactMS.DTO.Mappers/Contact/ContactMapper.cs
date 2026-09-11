@@ -1,6 +1,6 @@
 ﻿using ContactMS.Data.Contract;
 using ContactMS.DTOs.Contact;
-using ProductMS.Framework.Mappers;
+using ContactMS.Framework.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +21,8 @@ namespace ContactMS.DTO.Mappers.Contact
             entity.Id = value.Id;
             entity.Name = value.Name;
             entity.ActiveStatus = value.ActiveStatus;
+            entity.CreatedUserId = value.CreatedUserId;
+            entity.EditedUserId = value.EditedUserId;
             return entity;
         }
 
@@ -30,6 +32,8 @@ namespace ContactMS.DTO.Mappers.Contact
             value.Id = entity.Id;
             value.Name = entity.Name;
             value.ActiveStatus = entity.ActiveStatus;
+            value.CreatedUserId = entity.CreatedUserId;
+            value.EditedUserId = entity.EditedUserId;
             return value;
         }
     }

@@ -11,7 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Contact.Data.Contract\ContactMS.Data.Contract.csproj" />
     <ProjectReference Include="..\ContactMS.Business.Contracts\ContactMS.Business.Contracts.csproj" />
+    <ProjectReference Include="..\ContactMS.Data.Service.Contracts\ContactMS.Data.Service.Contracts.csproj" />
+    <ProjectReference Include="..\ContactMS.FrameWork\ContactMS.FrameWork.csproj" />
   </ItemGroup>
 
 </Project>

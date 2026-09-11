@@ -8,7 +8,9 @@ namespace ContactMS.DTOs.ContactDetail
 {
     public class CreateContactDetailDTO
     {
-        public int ContactId { get; set; }
-        public long ContactNumber { get; set; }
+        public long ContactId { get; set; }
+        public string ContactNumber { get; set; }
+        public long? CreatedUserId { get; set; }
+
     }
 }

@@ -12,6 +12,10 @@ namespace ContactMS.Data.Mappings
             _ = builder.HasKey(x => x.Id);
             _ = builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
             _ = builder.Property(x => x.ActiveStatus).IsRequired();
+            _ = builder.Property(x => x.CreatedUserId);
+            _ = builder.Property(x => x.EditedUserId);
+            _ = builder.Property(x => x.CreatedDate);
+            _ = builder.Property(x => x.EditedDate);
         }
     }
 }

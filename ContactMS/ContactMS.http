@@ -1,6 +1,34 @@
-@ContactMS_HostAddress = http://localhost:5271
+@ContactMS_HostAddress = https://localhost:7298
 
 GET {{ContactMS_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+POST {{ContactMS_HostAddress}}/api/contact/CreateContact
+Content-Type: application/json
+
+{
+  "Name":"test",
+  "ActiveStatus":1,
+  "CreatedUserId":1
+}
+
+###
+
+@id=1
+GET {{ContactMS_HostAddress}}/api/contact/GetContactById/{{id}}
+
+###
+
+POST {{ContactMS_HostAddress}}/api/contact/EditContact
+Content-Type: application/json
+
+{
+  "Id":1,
+  "Name":"test",
+  "ActiveStatus":1,
+  "EditedUserId":1
+}
 
 ###

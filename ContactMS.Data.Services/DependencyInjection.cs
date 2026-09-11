@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ContactMS.Data.Services
 {
-    public static class DependencyInjection
+    public static partial class DependencyInjection
     {
         public static IServiceCollection AddDataServices(this IServiceCollection services)
         {

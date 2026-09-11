@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace ContactMS.Business
 {
-    public static class DependencyInjection
+    public static partial class DependencyInjection
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             _ = services.AddScoped<IContactService, ContactService>();
+            _ = services.AddScoped<IContactDetailService, ContactDetailService>();
             return services;
         }
     }

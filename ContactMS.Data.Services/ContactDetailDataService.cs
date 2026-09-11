@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContactMS.Data.Services
 {
-    internal interface IContactDataService
+    public class ContactDetailDataService
     {
     }
 }

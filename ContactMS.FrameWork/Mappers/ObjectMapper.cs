@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductMS.Framework.Mappers
+namespace ContactMS.Framework.Mappers
 {
 
 
@@ -22,32 +22,32 @@ namespace ProductMS.Framework.Mappers
         }
 
 
-        //public abstract TObject ToObject(TEntity entity);
+        public abstract TObject ToObject(TEntity entity);
 
-        //public abstract TEntity ToEntity(TObject value);
+        public abstract TEntity ToEntity(TObject value);
 
-        //protected TEntity? CreateEntity()
-        //{
-        //    TEntity? entity = (TEntity?)Services.GetService(typeof(TEntity));
-        //    return entity;
-        //}
-
-
-        //public IEnumerable<TObject> ToObjects(IEnumerable<TEntity> entities)
-        //{
-        //    foreach (TEntity entity in entities)
-        //    {
-        //        yield return ToObject(entity);
-        //    }
-        //}
+        protected TEntity? CreateEntity()
+        {
+            TEntity? entity = (TEntity?)Services.GetService(typeof(TEntity));
+            return entity;
+        }
 
 
-        //public IEnumerable<TEntity> ToEntities(IEnumerable<TObject> items)
-        //{
-        //    foreach (TObject item in items)
-        //    {
-        //        yield return ToEntity(item);
-        //    }
-        //}
+        public IEnumerable<TObject> ToObjects(IEnumerable<TEntity> entities)
+        {
+            foreach (TEntity entity in entities)
+            {
+                yield return ToObject(entity);
+            }
+        }
+
+
+        public IEnumerable<TEntity> ToEntities(IEnumerable<TObject> items)
+        {
+            foreach (TObject item in items)
+            {
+                yield return ToEntity(item);
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductMS.Framework.Data.Entities
+namespace ContactMS.Framework.Data.Entities
 {
     /// <summary>
     /// Represents Interface IAuditable

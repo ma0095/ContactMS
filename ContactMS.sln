@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.10.12113.136 insiders
+VisualStudioVersion = 18.10.12113.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrameWorks", "FrameWorks", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -32,6 +32,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMS.DTO.Mappers", "ContactMS.DTO.Mappers\ContactMS.DTO.Mappers.csproj", "{2527AEDD-715D-4914-8CD7-637CAFF22D89}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMS.DTOs", "ContactMS.DTOs\ContactMS.DTOs.csproj", "{A523B729-9C95-43F2-8F8B-C4E6CD18483D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactMS.Framework.Extensions", "ContactMS.Framework.Extensions\ContactMS.Framework.Extensions.csproj", "{3D4B55B6-06C4-4A9B-A2D7-CFC2AFDDB861}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{A523B729-9C95-43F2-8F8B-C4E6CD18483D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A523B729-9C95-43F2-8F8B-C4E6CD18483D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A523B729-9C95-43F2-8F8B-C4E6CD18483D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D4B55B6-06C4-4A9B-A2D7-CFC2AFDDB861}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D4B55B6-06C4-4A9B-A2D7-CFC2AFDDB861}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D4B55B6-06C4-4A9B-A2D7-CFC2AFDDB861}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D4B55B6-06C4-4A9B-A2D7-CFC2AFDDB861}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{63DC0481-E0B2-431F-9E41-202FB8824230} = {B71A9464-CAFA-4D30-9E8E-53D538218922}
 		{2527AEDD-715D-4914-8CD7-637CAFF22D89} = {1CE4C556-8564-453F-9C11-34B7D5506B98}
 		{A523B729-9C95-43F2-8F8B-C4E6CD18483D} = {1CE4C556-8564-453F-9C11-34B7D5506B98}
+		{3D4B55B6-06C4-4A9B-A2D7-CFC2AFDDB861} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E2FBC56-C187-4D22-AEB4-96108E2A00C1}

@@ -1,5 +1,6 @@
 ﻿using ContactMS.Data.Contract;
 using ContactMS.Data.Entities;
+using ContactMS.Framework.Data;
 using ContactMS.FrameWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ContactMS.Data
 {
-    public static class DependencyInjection
+    public static partial class DependencyInjection
     {
         public static IServiceCollection AddEntities(this IServiceCollection services)
         {

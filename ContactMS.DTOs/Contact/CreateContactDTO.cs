@@ -10,5 +10,6 @@ namespace ContactMS.DTOs.Contact
     {
         public string Name { get; set; }
         public int ActiveStatus { get; set; }
+        public long? CreatedUserId { get; set; }
     }
 }

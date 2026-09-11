@@ -1,12 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using ProductMS.Framework.Data.Entities;
+﻿using ContactMS.Framework.Data.Entities;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductMS.Framework.Mappers
+namespace ContactMS.Framework.Mappers
 {
 
     

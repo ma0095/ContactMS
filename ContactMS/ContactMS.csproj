@@ -11,7 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\ContactMS.Business\ContactMS.Business.csproj" />
+    <ProjectReference Include="..\ContactMS.Data.Services\ContactMS.Data.Services.csproj" />
+    <ProjectReference Include="..\ContactMS.Data\ContactMS.Data.csproj" />
+    <ProjectReference Include="..\ContactMS.DTO.Mappers\ContactMS.DTO.Mappers.csproj" />
   </ItemGroup>
 
 </Project>

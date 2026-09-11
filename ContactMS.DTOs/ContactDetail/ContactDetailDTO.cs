@@ -8,8 +8,10 @@ namespace ContactMS.DTOs.ContactDetail
 {
     public class ContactDetailDTO
     {
-        public int Id { get; set; }
-        public int ContactId { get; set; }
-        public long ContactNumber { get; set; }
+        public long Id { get; set; }
+        public long ContactId { get; set; }
+        public string ContactNumber { get; set; }
+        public long? CreatedUserId { get; set; }
+        public long? EditedUserId { get; set; }
     }
 }

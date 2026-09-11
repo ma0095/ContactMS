@@ -17,8 +17,12 @@ namespace ContactMS.Data.Mappings
             _ = builder.HasKey(x => x.Id);
             _ = builder.Property(x => x.ContactId).IsRequired();
             _ = builder.Property(x => x.ContactNumber).IsRequired();
-            _ = builder.HasOne(x => x.Contact)             
-       .WithMany(x => x.ContactDetails).HasForeignKey(x => x.ContactId).OnDelete(DeleteBehavior.Cascade);
+            _ = builder.Property(x => x.CreatedUserId);
+            _ = builder.Property(x => x.EditedUserId);
+            _ = builder.Property(x => x.CreatedDate);
+            _ = builder.Property(x => x.EditedDate);
+            _ = builder.HasOne(x => x.Contact).WithMany(x => x.ContactDetails)
+                .HasForeignKey(x => x.ContactId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

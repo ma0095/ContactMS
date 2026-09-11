@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProductMS.Framework.Data;
-using ProductMS.Framework.Data.Entities;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
+using ContactMS.Framework.Data;
+using ContactMS.Framework.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,131 +21,131 @@ namespace ContactMS.FrameWork
         private readonly DbContext _dbContext;
 
 
-        //   private IServiceProvider serviceProvider { get; set; }
+        private IServiceProvider serviceProvider { get; set; }
 
-        //   private readonly ILogger _logger;
+        private readonly ILogger _logger;
 
-        //   private IDbContextTransaction? _transaction = null;
-        //   #endregion
+        private IDbContextTransaction? _transaction = null;
+        #endregion
 
-        //   #region Constructor        
+        #region Constructor        
 
-        //   public UnitOfWork(DbContext dbContext, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
-        //   {
-        //       this.serviceProvider = serviceProvider;
-        //       _dbContext = dbContext;
-        //       _logger = loggerFactory.CreateLogger("logs");
-        //   }
-        //   #endregion
+        public UnitOfWork(DbContext dbContext, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
+        {
+            this.serviceProvider = serviceProvider;
+            _dbContext = dbContext;
+            _logger = loggerFactory.CreateLogger("logs");
+        }
+        #endregion
 
-        //   #region Public Methods
+        #region Public Methods
 
-        //   public IEnumerable<TEntity> Exec<TEntity>(string query, params object[] parameters)
-        //   {
-        //       FormattableString sql = FormattableStringFactory.Create(query, parameters);
-        //       List<TEntity> entities = _dbContext.Database.SqlQuery<TEntity>(sql).ToList();
-        //       return entities.Select(i => i).AsEnumerable();
-        //   }
-
-
-        //   public void BeginTransaction()
-        //   {
-        //       _transaction = _dbContext.Database.BeginTransaction();
-        //   }
+        public IEnumerable<TEntity> Exec<TEntity>(string query, params object[] parameters)
+        {
+            FormattableString sql = FormattableStringFactory.Create(query, parameters);
+            List<TEntity> entities = _dbContext.Database.SqlQuery<TEntity>(sql).ToList();
+            return entities.Select(i => i).AsEnumerable();
+        }
 
 
-        //   public int Commit()
-        //   {
-        //       lock (_lock)
-        //       {
-        //           try
-        //           {
-        //               int result = _dbContext.SaveChanges();
-        //               _transaction.Commit();
-        //               return result;
-        //           }
-        //           catch
-        //           {
-        //               _transaction.Rollback();
-        //               return 0;
-        //           }
-        //           finally
-        //           {
-
-        //           }
-        //       }
-        //   }
+        public void BeginTransaction()
+        {
+            _transaction = _dbContext.Database.BeginTransaction();
+        }
 
 
-        //   private static readonly object _lock = new();
+        public int Commit()
+        {
+            lock (_lock)
+            {
+                try
+                {
+                    int result = _dbContext.SaveChanges();
+                    _transaction.Commit();
+                    return result;
+                }
+                catch
+                {
+                    _transaction.Rollback();
+                    return 0;
+                }
+                finally
+                {
+
+                }
+            }
+        }
 
 
-        //   public async Task<int> CommitAsync()
-        //   {
-        //       //lock (_lock)
-        //       //{
-        //       try
-        //       {
-        //           int result = await _dbContext.SaveChangesAsync();
-        //           return result;
-        //       }
-        //       finally
-        //       {
-        //           //_dbContext.ChangeTracker.Entries()
-        //           //    .ToList()
-        //           //    .ForEach(x => x.State = EntityState.Detached);
-        //       }
-        //       //  }
-        //   }
-
-        //   public int CommitTransaction()
-        //   {
-        //       lock (_lock)
-        //       {
-        //           try
-        //           {
-        //               int result = _dbContext.SaveChangesAsync().Result;
-        //               _transaction.Commit();
-        //               return result;
-        //           }
-        //           finally
-        //           {
-        //               //_dbContext.ChangeTracker.Entries()
-        //               //    .ToList()
-        //               //    .ForEach(x => x.State = EntityState.Detached);
-        //           }
-        //       }
-        //   }
+        private static readonly object _lock = new();
 
 
-        //   public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity
-        //   {
-        //       object? instance = serviceProvider.GetService(typeof(TEntity));
-        //       Type instanceType = instance.GetType();
-        //       MethodInfo setMethod = GetType().GetTypeInfo()
-        //                   .GetMethod("CreateRepository").MakeGenericMethod(typeof(TEntity), instanceType);
-        //       IRepository<TEntity>? repository = (IRepository<TEntity>)setMethod.Invoke(this, new object[] { });
-        //       //Repositories[keyType] = repository;
-        //       return repository;
-        //   }
+        public async Task<int> CommitAsync()
+        {
+            //lock (_lock)
+            //{
+            try
+            {
+                int result = await _dbContext.SaveChangesAsync();
+                return result;
+            }
+            finally
+            {
+                //_dbContext.ChangeTracker.Entries()
+                //    .ToList()
+                //    .ForEach(x => x.State = EntityState.Detached);
+            }
+            //  }
+        }
+
+        public int CommitTransaction()
+        {
+            lock (_lock)
+            {
+                try
+                {
+                    int result = _dbContext.SaveChangesAsync().Result;
+                    _transaction.Commit();
+                    return result;
+                }
+                finally
+                {
+                    //_dbContext.ChangeTracker.Entries()
+                    //    .ToList()
+                    //    .ForEach(x => x.State = EntityState.Detached);
+                }
+            }
+        }
 
 
-        //   public virtual object CreateRepository<TContract, TEntity>()
-        //     where TContract : IEntity
-        //     where TEntity : class, TContract
-        //   {
-        //       Repository<TContract, TEntity> repository = new(_dbContext, _logger);
-        //       return repository;
-        //   }
+        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity
+        {
+            object? instance = serviceProvider.GetService(typeof(TEntity));
+            Type instanceType = instance.GetType();
+            MethodInfo setMethod = GetType().GetTypeInfo()
+                        .GetMethod("CreateRepository").MakeGenericMethod(typeof(TEntity), instanceType);
+            IRepository<TEntity>? repository = (IRepository<TEntity>)setMethod.Invoke(this, new object[] { });
+            //Repositories[keyType] = repository;
+            return repository;
+        }
 
 
-        //   public void Rollback()
-        //   {
-        //       _transaction.Rollback();
-        //   }
-        //   #endregion
+        public virtual object CreateRepository<TContract, TEntity>()
+          where TContract : IEntity
+          where TEntity : class, TContract
+        {
+            Repository<TContract, TEntity> repository = new(_dbContext, _logger);
+            return repository;
+        }
 
-        //   #region IDisposable Support        
+
+        public void Rollback()
+        {
+            _transaction.Rollback();
+        }
+        #endregion
+
+        #region IDisposable Support        
 
         private bool disposedValue = false; // To detect redundant calls
 

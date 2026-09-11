@@ -1,15 +1,16 @@
-﻿using System;
+﻿using ContactMS.Framework.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ContactMS.Data.Contract
 {
-    public interface IContactDetail
+    public interface IContactDetail : IAuditable, IEntity
     {
-        public int Id { get; set; }
-        public int ContactId { get; set; }
-        public long ContactNumber { get; set; }
+        public long ContactId { get; set; }
+        public string ContactNumber { get; set; }
     }
 }
