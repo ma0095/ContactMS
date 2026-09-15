@@ -3,7 +3,7 @@ using ContactMS.Data.Service.Contracts;
 using ContactMS.Framework.Data;
 using ContactMS.Framework.Extensions;
 using Microsoft.EntityFrameworkCore;
-using ProductMS.Framework.Data.Services;
+using ContactMS.Framework.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

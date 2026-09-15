@@ -8,7 +8,6 @@ namespace ContactMS.Framework.Extensions
 {
     public class ResponseVM
     {
-        #region Member
        
         public string? ResponseCode { get; set; }
 
@@ -29,8 +28,6 @@ namespace ContactMS.Framework.Extensions
 
             set => _ResponseMessage = value;
         }
-        #endregion
-        #region Contructor
         
         public ResponseVM(string successCode)
         {
@@ -41,6 +38,5 @@ namespace ContactMS.Framework.Extensions
             ResponseCode = successCode;
             ResponseMessage = responseMessage;
         }
-        #endregion
     }
 }

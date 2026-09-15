@@ -17,7 +17,7 @@ namespace ContactMS.Controllers
         }
         [HttpPost]
         [Route("CreateContact")]
-        public async Task<ActionResult> CreateContact(CreateContactDTO dto)
+        public async Task<IActionResult> CreateContact(CreateContactDTO dto)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace ContactMS.Controllers
         }
         [HttpGet]
         [Route("GetContactById/{id}")]
-        public async Task<ActionResult> GetContactById(long id)
+        public async Task<IActionResult> GetContactById(long id)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace ContactMS.Controllers
         }
         [HttpPost]
         [Route("EditContact")]
-        public async Task<ActionResult> EditContact(EditContactDTO dto)
+        public async Task<IActionResult> EditContact(EditContactDTO dto)
         {
             try
             {

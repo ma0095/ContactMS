@@ -6,24 +6,10 @@ using System.Threading.Tasks;
 
 namespace ContactMS.Framework.Data.Entities
 {
-    /// <summary>
-    /// Represents a Entity Interface
-    /// </summary>
     public interface IEntity
     {
-        #region Member Variable
-        /// <summary>
-        /// get or set Identifier
-        /// </summary>
         long Id { get; set; }
-        /// <summary>
-        /// get or set Created Date
-        /// </summary>
         DateTime? CreatedDate { get; set; }
-        /// <summary>
-        /// get or set Edited Date
-        /// </summary>
         DateTime? EditedDate { get; set; }
-        #endregion
     }
 }

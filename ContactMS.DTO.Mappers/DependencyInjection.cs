@@ -1,6 +1,8 @@
 ﻿using ContactMS.Data.Contract;
 using ContactMS.DTO.Mappers.Contact;
+using ContactMS.DTO.Mappers.ContactDetail;
 using ContactMS.DTOs.Contact;
+using ContactMS.DTOs.ContactDetail;
 using ContactMS.Framework.Mappers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -18,6 +20,10 @@ namespace ContactMS.DTO.Mappers
             services.AddScoped<APIDataMapper<IContact, ContactDTO>, ContactMapper>();
             services.AddScoped<APIDataMapper<IContact, CreateContactDTO>, CreateContactMapper>();
             services.AddScoped<APIDataMapper<IContact, EditContactDTO>, EditContactMapper>();
+
+            services.AddScoped<APIDataMapper<IContactDetail, ContactDetailDTO>, ContactDetailMapper>();
+            services.AddScoped<APIDataMapper<IContactDetail, CreateContactDetailDTO>, CreateContactDetailMapper>();
+            services.AddScoped<APIDataMapper<IContactDetail, EditContactDetailDTO>, EditContactDetailMapper>();
 
             return services;
         }

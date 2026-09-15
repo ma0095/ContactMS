@@ -27,11 +27,11 @@ namespace ContactMS.FrameWork
         private readonly DbSet<TEntity> _dbSet;
 
 
-        private static readonly object LockObject = new();
+        //private static readonly object LockObject = new();
 
 
-        private static readonly List<Expression<Func<TEntity, object>>> navigationproperties
-          = new();
+        //private static readonly List<Expression<Func<TEntity, object>>> navigationproperties
+        //  = new();
 
 
         protected readonly ILogger _logger;
@@ -50,10 +50,10 @@ namespace ContactMS.FrameWork
             return @_queryable;
         }
 
-        public DbContext GetDbContext()
-        {
-            return _dbContext;
-        }
+        //public DbContext GetDbContext()
+        //{
+        //    return _dbContext;
+        //}
 
 
         public TContract Add(TContract entity)
@@ -74,65 +74,65 @@ namespace ContactMS.FrameWork
             entry.Property(x => x.CreatedDate).IsModified = false;
         }
 
-        public void Insert(IEnumerable<TContract> entities)
-        {
-            lock (LockObject)
-            {
-                IEnumerable<TEntity> items = entities.Cast<TEntity>();
-                foreach (TEntity item in items)
-                {
-                    item.CreatedDate = DateTime.UtcNow;
-                    item.EditedDate = DateTime.UtcNow;
-                }
-                _dbSet.AddRange(items);
-            }
-        }
+        //public void Insert(IEnumerable<TContract> entities)
+        //{
+        //    lock (LockObject)
+        //    {
+        //        IEnumerable<TEntity> items = entities.Cast<TEntity>();
+        //        foreach (TEntity item in items)
+        //        {
+        //            item.CreatedDate = DateTime.UtcNow;
+        //            item.EditedDate = DateTime.UtcNow;
+        //        }
+        //        _dbSet.AddRange(items);
+        //    }
+        //}
 
 
-        public void Delete(TContract entity)
-        {
-            if (_dbContext.Entry((TEntity)entity).State == EntityState.Detached)
-            {
-                _ = _dbSet.Attach((TEntity)entity);
-            }
+        //public void Delete(TContract entity)
+        //{
+        //    if (_dbContext.Entry((TEntity)entity).State == EntityState.Detached)
+        //    {
+        //        _ = _dbSet.Attach((TEntity)entity);
+        //    }
 
-            _ = _dbSet.Remove((TEntity)entity);
-        }
-
-
-        public void DeleteAll(IEnumerable<TContract> entity)
-        {
-            lock (LockObject)
-            {
-                IEnumerable<TEntity> items = entity.Cast<TEntity>();
-                foreach (TEntity item in items)
-                {
-                    if (_dbContext.Entry(item).State == EntityState.Detached)
-                    {
-                        _ = _dbSet.Attach(item);
-                    }
-                    _ = _dbSet.Remove(item);
-                }
-            }
-        }
+        //    _ = _dbSet.Remove((TEntity)entity);
+        //}
 
 
-        public async Task<IEnumerable<TContract>> GetAllAsync()
-        {
-            IEnumerable<TContract> items = await _dbSet.ToListAsync();
-            return items;
-        }
-        public async Task<IEnumerable<TContract>> GetAllAsync(Expression<Func<TContract, bool>> condition)
-        {
-            IEnumerable<TContract> items = await _dbSet.AsNoTracking().Where(condition).ToListAsync();
-            return items;
-        }
+        //public void DeleteAll(IEnumerable<TContract> entity)
+        //{
+        //    lock (LockObject)
+        //    {
+        //        IEnumerable<TEntity> items = entity.Cast<TEntity>();
+        //        foreach (TEntity item in items)
+        //        {
+        //            if (_dbContext.Entry(item).State == EntityState.Detached)
+        //            {
+        //                _ = _dbSet.Attach(item);
+        //            }
+        //            _ = _dbSet.Remove(item);
+        //        }
+        //    }
+        //}
 
 
-        public async Task<TContract> GetByIdAsync(int id)
-        {
-            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
-        }
+        //public async Task<IEnumerable<TContract>> GetAllAsync()
+        //{
+        //    IEnumerable<TContract> items = await _dbSet.ToListAsync();
+        //    return items;
+        //}
+        //public async Task<IEnumerable<TContract>> GetAllAsync(Expression<Func<TContract, bool>> condition)
+        //{
+        //    IEnumerable<TContract> items = await _dbSet.AsNoTracking().Where(condition).ToListAsync();
+        //    return items;
+        //}
+
+
+        //public async Task<TContract> GetByIdAsync(int id)
+        //{
+        //    return await _dbSet.AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
+        //}
 
 
         public IQueryable<TContract> Entities
@@ -146,17 +146,16 @@ namespace ContactMS.FrameWork
         }
 
 
-        public void Include(Expression<Func<TEntity, object>> navigationProperty)
-        {
-            _queryable = _queryable.Include(navigationProperty);
-        }
+        //public void Include(Expression<Func<TEntity, object>> navigationProperty)
+        //{
+        //    _queryable = _queryable.Include(navigationProperty);
+        //}
 
-        public async Task UpdateAsync(Expression<Func<TContract, bool>> condition, Action<TContract> updation)
-        {
-            await _dbSet.Where(condition)
-                .Select(x => x).ForEachAsync(updation);
-        }
-        #region IDisposable Support
+        //public async Task UpdateAsync(Expression<Func<TContract, bool>> condition, Action<TContract> updation)
+        //{
+        //    await _dbSet.Where(condition)
+        //        .Select(x => x).ForEachAsync(updation);
+        //}
 
         private bool disposedValue = false; // To detect redundant calls
 
@@ -167,13 +166,8 @@ namespace ContactMS.FrameWork
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
                     _dbContext.Dispose();
                 }
-
-                //// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                //// TODO: set large fields to null.
-
                 disposedValue = true;
             }
         }
@@ -181,11 +175,8 @@ namespace ContactMS.FrameWork
 
         public void Dispose()
         {
-            //// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            //// TODO: uncomment the following line if the finalizer is overridden above.
             GC.SuppressFinalize(this);
         }
-        #endregion
     }
 }

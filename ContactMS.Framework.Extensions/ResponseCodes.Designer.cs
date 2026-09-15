@@ -81,9 +81,72 @@ namespace ContactMS.Framework.Extensions {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        internal static string CCC0002 {
+            get {
+                return ResourceManager.GetString("CCC0002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CCC0003 {
+            get {
+                return ResourceManager.GetString("CCC0003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         internal static string CCCE001 {
             get {
                 return ResourceManager.GetString("CCCE001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CCCE002 {
+            get {
+                return ResourceManager.GetString("CCCE002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CCE0003 {
+            get {
+                return ResourceManager.GetString("CCE0003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CCEE003 {
+            get {
+                return ResourceManager.GetString("CCEE003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CCG0002 {
+            get {
+                return ResourceManager.GetString("CCG0002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string CCGE002 {
+            get {
+                return ResourceManager.GetString("CCGE002", resourceCulture);
             }
         }
         

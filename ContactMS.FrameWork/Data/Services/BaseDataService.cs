@@ -5,11 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductMS.Framework.Data.Services
+namespace ContactMS.Framework.Data.Services
 {
-    /// <summary>
-    /// The BaseDataService.
-    /// </summary>
+
     public abstract class BaseDataService : IDataService
     {
         public IUnitOfWork UnitOfWork;

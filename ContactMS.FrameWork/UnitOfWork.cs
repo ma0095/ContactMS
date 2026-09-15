@@ -15,7 +15,6 @@ namespace ContactMS.FrameWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        #region Private Members        
 
 
         private readonly DbContext _dbContext;
@@ -25,10 +24,8 @@ namespace ContactMS.FrameWork
 
         private readonly ILogger _logger;
 
-        private IDbContextTransaction? _transaction = null;
-        #endregion
+        //private IDbContextTransaction? _transaction = null;
 
-        #region Constructor        
 
         public UnitOfWork(DbContext dbContext, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
@@ -36,54 +33,50 @@ namespace ContactMS.FrameWork
             _dbContext = dbContext;
             _logger = loggerFactory.CreateLogger("logs");
         }
-        #endregion
-
-        #region Public Methods
-
-        public IEnumerable<TEntity> Exec<TEntity>(string query, params object[] parameters)
-        {
-            FormattableString sql = FormattableStringFactory.Create(query, parameters);
-            List<TEntity> entities = _dbContext.Database.SqlQuery<TEntity>(sql).ToList();
-            return entities.Select(i => i).AsEnumerable();
-        }
 
 
-        public void BeginTransaction()
-        {
-            _transaction = _dbContext.Database.BeginTransaction();
-        }
+        //public IEnumerable<TEntity> Exec<TEntity>(string query, params object[] parameters)
+        //{
+        //    FormattableString sql = FormattableStringFactory.Create(query, parameters);
+        //    List<TEntity> entities = _dbContext.Database.SqlQuery<TEntity>(sql).ToList();
+        //    return entities.Select(i => i).AsEnumerable();
+        //}
 
 
-        public int Commit()
-        {
-            lock (_lock)
-            {
-                try
-                {
-                    int result = _dbContext.SaveChanges();
-                    _transaction.Commit();
-                    return result;
-                }
-                catch
-                {
-                    _transaction.Rollback();
-                    return 0;
-                }
-                finally
-                {
-
-                }
-            }
-        }
+        //public void BeginTransaction()
+        //{
+        //    _transaction = _dbContext.Database.BeginTransaction();
+        //}
 
 
-        private static readonly object _lock = new();
+        //public int Commit()
+        //{
+        //    lock (_lock)
+        //    {
+        //        try
+        //        {
+        //            int result = _dbContext.SaveChanges();
+        //            _transaction.Commit();
+        //            return result;
+        //        }
+        //        catch
+        //        {
+        //            _transaction.Rollback();
+        //            return 0;
+        //        }
+        //        finally
+        //        {
+
+        //        }
+        //    }
+        //}
+
+
+        //private static readonly object _lock = new();
 
 
         public async Task<int> CommitAsync()
         {
-            //lock (_lock)
-            //{
             try
             {
                 int result = await _dbContext.SaveChangesAsync();
@@ -91,31 +84,24 @@ namespace ContactMS.FrameWork
             }
             finally
             {
-                //_dbContext.ChangeTracker.Entries()
-                //    .ToList()
-                //    .ForEach(x => x.State = EntityState.Detached);
             }
-            //  }
         }
 
-        public int CommitTransaction()
-        {
-            lock (_lock)
-            {
-                try
-                {
-                    int result = _dbContext.SaveChangesAsync().Result;
-                    _transaction.Commit();
-                    return result;
-                }
-                finally
-                {
-                    //_dbContext.ChangeTracker.Entries()
-                    //    .ToList()
-                    //    .ForEach(x => x.State = EntityState.Detached);
-                }
-            }
-        }
+        //public int CommitTransaction()
+        //{
+        //    lock (_lock)
+        //    {
+        //        try
+        //        {
+        //            int result = _dbContext.SaveChangesAsync().Result;
+        //            _transaction.Commit();
+        //            return result;
+        //        }
+        //        finally
+        //        {
+        //        }
+        //    }
+        //}
 
 
         public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity
@@ -139,13 +125,11 @@ namespace ContactMS.FrameWork
         }
 
 
-        public void Rollback()
-        {
-            _transaction.Rollback();
-        }
-        #endregion
+        //public void Rollback()
+        //{
+        //    _transaction.Rollback();
+        //}
 
-        #region IDisposable Support        
 
         private bool disposedValue = false; // To detect redundant calls
 
@@ -157,10 +141,6 @@ namespace ContactMS.FrameWork
                 {
                     _dbContext.Dispose();
                 }
-
-                //// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                //// TODO: set large fields to null.
-
                 disposedValue = true;
             }
         }
@@ -168,11 +148,8 @@ namespace ContactMS.FrameWork
 
         public void Dispose()
         {
-            //// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            //// TODO: uncomment the following line if the finalizer is overridden above.
             GC.SuppressFinalize(this);
         }
-        #endregion
     }
 }

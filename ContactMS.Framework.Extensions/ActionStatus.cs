@@ -8,14 +8,11 @@ namespace ContactMS.Framework.Extensions
 {
     public class ActionStatus
     {
-        #region Member
       
         public bool IsSuccess { get; set; } = false;
         public ResponseVM? Response { get; set; }
         public Exception? Exception { get; set; }
         public bool HasException => Exception != null;
-        #endregion
-        #region Constructor
         public ActionStatus(bool isSuccess, ResponseVM response)
         {
             IsSuccess = isSuccess;
@@ -40,8 +37,6 @@ namespace ContactMS.Framework.Extensions
             Exception = actionStatus.Exception;
             Response = actionStatus.Response;
         }
-        #endregion
-        #region Operators
        
         public static implicit operator bool(ActionStatus actionStatus)
         {
@@ -52,18 +47,14 @@ namespace ContactMS.Framework.Extensions
         {
             return new ActionStatus(isSuccess, new ResponseVM("DEFAULT"));
         }
-        #endregion
     }
     
     public class ActionStatus<T> : ActionStatus
     {
-        #region Member
        
         public T? Result { get; set; }
         
         public int TotalCount { get; set; }
-        #endregion
-        #region Constructor
         
         public ActionStatus(bool isSuccess, T result) : base(isSuccess, new ResponseVM("DEFAULT"))
         {
@@ -89,6 +80,5 @@ namespace ContactMS.Framework.Extensions
         {
             Result = default;
         }
-        #endregion
     }
 }

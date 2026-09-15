@@ -32,3 +32,30 @@ Content-Type: application/json
 }
 
 ###
+
+POST {{ContactMS_HostAddress}}/api/contactdetail/CreateContactDetail
+Content-Type: application/json
+
+{
+  "ContactNumber":"123456",
+  "ContactId":1,
+  "CreatedUserId":1
+}
+
+###
+
+POST {{ContactMS_HostAddress}}/api/contactdetail/EditContactDetail
+Content-Type: application/json
+
+{
+  "Id":1,
+  "ContactNumber":"1234567",
+  "ContactId":1,
+  "EditedUserId":1
+}
+
+###
+@id=1
+GET {{ContactMS_HostAddress}}/api/contactdetail/GetContactDetailById/{{id}}
+
+###
