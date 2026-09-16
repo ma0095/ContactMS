@@ -59,3 +59,26 @@ Content-Type: application/json
 GET {{ContactMS_HostAddress}}/api/contactdetail/GetContactDetailById/{{id}}
 
 ###
+
+POST {{ContactMS_HostAddress}}/api/contact/CreateContactWithDetails
+Content-Type: application/json
+
+{
+  "Name":"abcde",
+  "ActiveStatus":1,
+  "CreatedUserId":1,
+  "ContactDetails":
+  
+     [
+        {
+          "ContactNumber":"12345"
+        },
+        {
+          "ContactNumber":"1234"
+        }
+     ]
+   
+  
+}
+
+###

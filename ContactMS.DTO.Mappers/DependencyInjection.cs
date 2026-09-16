@@ -24,6 +24,8 @@ namespace ContactMS.DTO.Mappers
             services.AddScoped<APIDataMapper<IContactDetail, ContactDetailDTO>, ContactDetailMapper>();
             services.AddScoped<APIDataMapper<IContactDetail, CreateContactDetailDTO>, CreateContactDetailMapper>();
             services.AddScoped<APIDataMapper<IContactDetail, EditContactDetailDTO>, EditContactDetailMapper>();
+            services.AddScoped<APIDataMapper<IContactDetail, ContactDetailCreateDTO>, ContactDetailCreateMapper>();
+
 
             return services;
         }

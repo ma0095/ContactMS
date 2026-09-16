@@ -1,8 +1,8 @@
-using ContactMS.Data;
-using Microsoft.EntityFrameworkCore;
 using ContactMS.Business;
-using ContactMS.DTO.Mappers;
+using ContactMS.Data;
 using ContactMS.Data.Services;
+using ContactMS.DTO.Mappers;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,9 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 
-string? connectionStrings = builder.Configuration.GetConnectionString("ContactDb");
-builder.Services.AddDbContext<DbContext, ContactMSContext>(options => options.UseSqlServer(connectionStrings));
+//string? connectionString = builder.Configuration.GetConnectionString("ContactDb");
+//builder.Services.AddDbContext<ContactMSContext>(options => options.UseSqlServer(connectionString));
 
+builder.Services.AddDbContext<ContactMSContext>(options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("ContactDb")
+    )
+);
 
 builder.Services.AddEntities();
 builder.Services.AddDataServices();

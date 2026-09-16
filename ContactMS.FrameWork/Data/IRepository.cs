@@ -15,7 +15,7 @@ namespace ContactMS.Framework.Data
         //Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> condition);
         //Task<TEntity> GetByIdAsync(int id);
         TEntity Add(TEntity entity);
-        //void Insert(IEnumerable<TEntity> entities);
+        void Insert(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
         //Task UpdateAsync(Expression<Func<TEntity, bool>> condition, Action<TEntity> updation);
         //void Delete(TEntity entity);

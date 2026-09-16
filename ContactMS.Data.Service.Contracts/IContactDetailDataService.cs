@@ -11,6 +11,7 @@ namespace ContactMS.Data.Service.Contracts
     public interface IContactDetailDataService
     {
         Task<ActionStatus<IContactDetail>> CreateContactDetail(IContactDetail result);
+        Task<ActionStatus<List<IContactDetail>>> CreateContactDetails(List<IContactDetail> detailmodel);
         Task<ActionStatus<IContactDetail>> EditContactDetail(IContactDetail result);
         Task<ActionStatus<IContactDetail>> GetContactDetailById(long id);
     }

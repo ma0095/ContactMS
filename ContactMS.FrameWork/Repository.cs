@@ -27,7 +27,7 @@ namespace ContactMS.FrameWork
         private readonly DbSet<TEntity> _dbSet;
 
 
-        //private static readonly object LockObject = new();
+        private static readonly object LockObject = new();
 
 
         //private static readonly List<Expression<Func<TEntity, object>>> navigationproperties
@@ -74,19 +74,19 @@ namespace ContactMS.FrameWork
             entry.Property(x => x.CreatedDate).IsModified = false;
         }
 
-        //public void Insert(IEnumerable<TContract> entities)
-        //{
-        //    lock (LockObject)
-        //    {
-        //        IEnumerable<TEntity> items = entities.Cast<TEntity>();
-        //        foreach (TEntity item in items)
-        //        {
-        //            item.CreatedDate = DateTime.UtcNow;
-        //            item.EditedDate = DateTime.UtcNow;
-        //        }
-        //        _dbSet.AddRange(items);
-        //    }
-        //}
+        public void Insert(IEnumerable<TContract> entities)
+        {
+            lock (LockObject)
+            {
+                IEnumerable<TEntity> items = entities.Cast<TEntity>();
+                foreach (TEntity item in items)
+                {
+                    item.CreatedDate = DateTime.UtcNow;
+                    item.EditedDate = DateTime.UtcNow;
+                }
+                _dbSet.AddRange(items);
+            }
+        }
 
 
         //public void Delete(TContract entity)

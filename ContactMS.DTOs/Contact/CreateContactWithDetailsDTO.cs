@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace ContactMS.DTOs.Contact
 {
-    public class ContactDTO
+    public class CreateContactWithDetailsDTO
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public int ActiveStatus { get; set; }
         public long? CreatedUserId { get; set; }
-        public long? EditedUserId { get; set; }
-        public List<ContactDetailDTO>? ContactDetails { get; set; }
 
+        public List<ContactDetailCreateDTO>? ContactDetails { get; set; }
     }
 }

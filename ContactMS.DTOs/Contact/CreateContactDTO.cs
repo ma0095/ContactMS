@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ContactMS.DTOs.ContactDetail;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace ContactMS.DTOs.Contact
         public string Name { get; set; }
         public int ActiveStatus { get; set; }
         public long? CreatedUserId { get; set; }
+        public List<ContactDetailCreateDTO>? ContactDetails { get; set; }
+
     }
 }

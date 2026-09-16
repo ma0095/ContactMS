@@ -11,6 +11,7 @@ namespace ContactMS.Business.Contracts
     public interface IContactService
     {
         Task<ActionStatus<ContactDTO>> CreateContact(CreateContactDTO dto);
+        Task<ActionStatus<ContactDTO>> CreateContactWithDetails(CreateContactDTO dto);
         Task<ActionStatus<ContactDTO>> EditContact(EditContactDTO dto);
         Task<ActionStatus<ContactDTO>> GetContactById(long id);
     }

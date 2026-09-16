@@ -10,7 +10,7 @@ namespace ContactMS.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        IContactService _contactService;
+        private readonly IContactService _contactService;
         public ContactController(IContactService contactService)
         {
             _contactService = contactService;
@@ -85,6 +85,30 @@ namespace ContactMS.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new ActionStatus(new ResponseVM("CCEE001")));
+            }
+        }
+        [HttpPost]
+        [Route("CreateContactWithDetails")]
+        public async Task<IActionResult> CreateContactWithDetails(CreateContactDTO dto)
+        {
+            try
+            {
+                var result = await _contactService.CreateContactWithDetails(dto);
+                if (result)
+                {
+                    result.Response = new ResponseVM("CCC0001");
+                    return Ok(result);
+                }
+                else if (result.HasException)
+                {
+                    return StatusCode(500, new ActionStatus(new ResponseVM("CCCE001")));
+                }
+
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ActionStatus(new ResponseVM("CCCE001")));
             }
         }
 

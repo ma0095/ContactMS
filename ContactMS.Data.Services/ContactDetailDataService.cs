@@ -79,6 +79,23 @@ namespace ContactMS.Data.Services
                 return new ActionStatus<IContactDetail>("DPC-EditContactDetail", ex);
             }
         }
+        public async Task<ActionStatus<List<IContactDetail>>> CreateContactDetails(List<IContactDetail> requestdata)
+        {
+            try
+            {
+                _contactDetailRepo.Insert(requestdata);
+                int count = await UnitOfWork.CommitAsync();
+                if (count > 0)
+                {
+                    return new ActionStatus<List<IContactDetail>>(true, requestdata);
+                }
+                return new ActionStatus<List<IContactDetail>>(new ResponseVM("DCC0001"));
+            }
+            catch (Exception ex)
+            {
+                return new ActionStatus<List<IContactDetail>>("DPC-CreateContactDetails", ex);
+            }
+        }
 
     }
 }

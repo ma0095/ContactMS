@@ -2,6 +2,7 @@
 using ContactMS.Data.Contract;
 using ContactMS.Data.Service.Contracts;
 using ContactMS.DTOs.Contact;
+using ContactMS.DTOs.ContactDetail;
 using ContactMS.Framework.Extensions;
 using ContactMS.Framework.Mappers;
 using System;
@@ -15,22 +16,45 @@ namespace ContactMS.Business
     public class ContactService : IContactService
     {
         IContactDataService _contactDataService;
+        IContactDetailDataService _contactDetailDataService;
+
         private readonly APIDataMapper<IContact, ContactDTO> _contactMapper;
         private readonly APIDataMapper<IContact, CreateContactDTO> _createContactRequestMapper;
         private readonly APIDataMapper<IContact, EditContactDTO> _editContactRequestMapper;
+        private readonly APIDataMapper<IContactDetail, CreateContactDetailDTO> _createContactDetailRequestMapper;
+        private readonly APIDataMapper<IContactDetail, ContactDetailDTO> _contactDetailMapper;
+        private readonly APIDataMapper<IContactDetail, ContactDetailCreateDTO> _contactDetailCreateMapper;
+
+
+
 
         public ContactService(IContactDataService contactDataService,
-
+                    IContactDetailDataService contactDetailDataService,
             APIDataMapper<IContact, ContactDTO> contactMapper,
             APIDataMapper<IContact, CreateContactDTO> createContactRequestMapper,
-            APIDataMapper<IContact, EditContactDTO> editContactRequestMapper
+            APIDataMapper<IContact, EditContactDTO> editContactRequestMapper,
+
+
+
+            APIDataMapper<IContactDetail, CreateContactDetailDTO> createContactDetailRequestMapper,
+            APIDataMapper<IContactDetail, ContactDetailDTO> contactDetailMapper,
+            APIDataMapper<IContactDetail, ContactDetailCreateDTO> contactDetailCreateMapper
+
+
 
             )
         {
             _contactDataService = contactDataService;
+            _contactDetailDataService = contactDetailDataService;
             _contactMapper = contactMapper;
             _createContactRequestMapper = createContactRequestMapper;
             _editContactRequestMapper = editContactRequestMapper;
+
+            _createContactDetailRequestMapper = createContactDetailRequestMapper;
+            _contactDetailMapper = contactDetailMapper;
+            _contactDetailCreateMapper = contactDetailCreateMapper;
+
+
         }
         public async Task<ActionStatus<ContactDTO>> CreateContact(CreateContactDTO dto)
         {
@@ -96,6 +120,45 @@ namespace ContactMS.Business
             catch (Exception ex)
             {
                 return new ActionStatus<ContactDTO>("BPC-EditContact", ex);
+            }
+        }
+        public async Task<ActionStatus<ContactDTO>> CreateContactWithDetails(CreateContactDTO dto)
+        {
+            try
+            {
+                IContact result = _createContactRequestMapper.ToEntity(dto);
+                ActionStatus<IContact> resultEntity = await _contactDataService.CreateContact(result);
+                if (resultEntity)
+                {
+                    ContactDTO resultData = _contactMapper.ToObject(resultEntity.Result);
+                    List<IContactDetail> detailmodel = _contactDetailCreateMapper.ToEntities(dto.ContactDetails).ToList();
+                    detailmodel.ForEach(x =>
+                    {
+                        x.ContactId = resultEntity.Result.Id;
+                        x.CreatedUserId = resultEntity.Result.CreatedUserId;
+                    });
+                    ActionStatus<List<IContactDetail>> detailResultEntity = await _contactDetailDataService.CreateContactDetails(detailmodel);
+                    if (detailResultEntity)
+                    {
+                        List<ContactDetailDTO> detailresult = _contactDetailMapper.ToObjects(detailResultEntity.Result).ToList();
+                        resultData.ContactDetails = detailresult;
+                    }
+                    else if (detailResultEntity.HasException)
+                    {
+
+                    }
+                    return new ActionStatus<ContactDTO>(true, resultData);
+                }
+                else if (resultEntity.HasException)
+                {
+                    return new ActionStatus<ContactDTO>(new ResponseVM("BCCE001"));
+                }
+
+                return new ActionStatus<ContactDTO>(resultEntity);
+            }
+            catch (Exception ex)
+            {
+                return new ActionStatus<ContactDTO>("BPC-CreateContactWithDetails", ex);
             }
         }
 

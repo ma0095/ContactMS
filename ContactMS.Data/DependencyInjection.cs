@@ -11,7 +11,8 @@ namespace ContactMS.Data
     {
         public static IServiceCollection AddEntities(this IServiceCollection services)
         {
-            services.AddScoped<DbContext, ContactMSContext>();
+            services.AddScoped<DbContext>(serviceProvider => serviceProvider.GetRequiredService<ContactMSContext>());
+            //services.AddScoped<DbContext, ContactMSContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             _ = services.AddTransient<IContact, Contact>();

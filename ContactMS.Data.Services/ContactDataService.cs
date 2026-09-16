@@ -15,9 +15,12 @@ namespace ContactMS.Data.Services
     public class ContactDataService :BaseDataService,IContactDataService
     {
         private IRepository<IContact> _contactRepo;
+        private IRepository<IContactDetail> _contactDetailRepo;
+
         public ContactDataService(IUnitOfWork unitOfWork):base(unitOfWork)
         {
             _contactRepo = unitOfWork.Repository<IContact>();
+            _contactDetailRepo = unitOfWork.Repository<IContactDetail>();
         }
         public async Task<ActionStatus<IContact>> CreateContact(IContact requestdata)
         {
@@ -79,6 +82,6 @@ namespace ContactMS.Data.Services
                 return new ActionStatus<IContact>("DPC-EditContact", ex);
             }
         }
-
+       
     }
 }
