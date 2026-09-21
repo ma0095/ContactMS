@@ -16,8 +16,7 @@ Content-Type: application/json
 
 ###
 
-@id=1
-GET {{ContactMS_HostAddress}}/api/contact/GetContactById/{{id}}
+GET {{ContactMS_HostAddress}}/api/contact/GetContactById/6
 
 ###
 
@@ -55,8 +54,7 @@ Content-Type: application/json
 }
 
 ###
-@id=1
-GET {{ContactMS_HostAddress}}/api/contactdetail/GetContactDetailById/{{id}}
+GET {{ContactMS_HostAddress}}/api/contactdetail/GetContactDetailById/6
 
 ###
 

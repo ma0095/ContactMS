@@ -21,12 +21,8 @@ namespace ContactMS.Business
         private readonly APIDataMapper<IContact, ContactDTO> _contactMapper;
         private readonly APIDataMapper<IContact, CreateContactDTO> _createContactRequestMapper;
         private readonly APIDataMapper<IContact, EditContactDTO> _editContactRequestMapper;
-        private readonly APIDataMapper<IContactDetail, CreateContactDetailDTO> _createContactDetailRequestMapper;
         private readonly APIDataMapper<IContactDetail, ContactDetailDTO> _contactDetailMapper;
         private readonly APIDataMapper<IContactDetail, ContactDetailCreateDTO> _contactDetailCreateMapper;
-
-
-
 
         public ContactService(IContactDataService contactDataService,
                     IContactDetailDataService contactDetailDataService,
@@ -34,13 +30,9 @@ namespace ContactMS.Business
             APIDataMapper<IContact, CreateContactDTO> createContactRequestMapper,
             APIDataMapper<IContact, EditContactDTO> editContactRequestMapper,
 
-
-
-            APIDataMapper<IContactDetail, CreateContactDetailDTO> createContactDetailRequestMapper,
+            //APIDataMapper<IContactDetail, CreateContactDetailDTO> createContactDetailRequestMapper,
             APIDataMapper<IContactDetail, ContactDetailDTO> contactDetailMapper,
             APIDataMapper<IContactDetail, ContactDetailCreateDTO> contactDetailCreateMapper
-
-
 
             )
         {
@@ -50,11 +42,9 @@ namespace ContactMS.Business
             _createContactRequestMapper = createContactRequestMapper;
             _editContactRequestMapper = editContactRequestMapper;
 
-            _createContactDetailRequestMapper = createContactDetailRequestMapper;
+            //_createContactDetailRequestMapper = createContactDetailRequestMapper;
             _contactDetailMapper = contactDetailMapper;
             _contactDetailCreateMapper = contactDetailCreateMapper;
-
-
         }
         public async Task<ActionStatus<ContactDTO>> CreateContact(CreateContactDTO dto)
         {
@@ -87,6 +77,12 @@ namespace ContactMS.Business
                 if (contact)
                 {
                     ContactDTO response = _contactMapper.ToObject(contact.Result);
+                    ActionStatus<List<IContactDetail>> contactDetails = await _contactDetailDataService.GetContactDetailsByContactId(id);
+                    if(contactDetails != null)
+                    {
+                        List<ContactDetailDTO> contactDetailsResponse = _contactDetailMapper.ToObjects(contactDetails.Result).ToList();
+                        response.ContactDetails = contactDetailsResponse;
+                    }
                     return new ActionStatus<ContactDTO>(true, response);
                 }
                 else if (contact.HasException)
@@ -142,10 +138,6 @@ namespace ContactMS.Business
                     {
                         List<ContactDetailDTO> detailresult = _contactDetailMapper.ToObjects(detailResultEntity.Result).ToList();
                         resultData.ContactDetails = detailresult;
-                    }
-                    else if (detailResultEntity.HasException)
-                    {
-
                     }
                     return new ActionStatus<ContactDTO>(true, resultData);
                 }

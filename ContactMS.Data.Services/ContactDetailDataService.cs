@@ -96,6 +96,22 @@ namespace ContactMS.Data.Services
                 return new ActionStatus<List<IContactDetail>>("DPC-CreateContactDetails", ex);
             }
         }
+        public async Task<ActionStatus<List<IContactDetail>>> GetContactDetailsByContactId(long contactId)
+        {
+            try
+            {
+                List<IContactDetail> datas = await _contactDetailRepo.Entities.AsNoTracking().Where(x => x.ContactId == contactId).ToListAsync();
+                if (datas != null)
+                {
+                    return new ActionStatus<List<IContactDetail>>(true, datas);
+                }
+                return new ActionStatus<List<IContactDetail>>(new ResponseVM("DCG0002"));
+            }
+            catch (Exception ex)
+            {
+                return new ActionStatus<List<IContactDetail>>("DPC-GetContactDetailsByContactId", ex);
+            }
+        }
 
     }
 }

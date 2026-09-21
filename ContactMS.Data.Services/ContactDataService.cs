@@ -41,6 +41,7 @@ namespace ContactMS.Data.Services
                 return new ActionStatus<IContact>("DPC-CreateContact", ex);
             }
         }
+       
         public async Task<ActionStatus<IContact>> GetContactById(long id)
         {
             try
@@ -82,6 +83,42 @@ namespace ContactMS.Data.Services
                 return new ActionStatus<IContact>("DPC-EditContact", ex);
             }
         }
-       
+        //public async Task<ActionStatus<IContact>> CreateContactWithDetails(IContact contact, List<IContactDetail> details)
+        //{
+        //    try
+        //    {
+        //        await using var transaction = await UnitOfWork.BeginTransactionAsync();
+
+        //        IContact createdContact = _contactRepo.Add(contact);
+        //        int contactCount = await UnitOfWork.CommitAsync();
+        //        if (contactCount <= 0)
+        //        {
+        //            await transaction.RollbackAsync();
+        //            return new ActionStatus<IContact>(new ResponseVM("DCC0001"));
+        //        }
+
+        //        details.ForEach(detail =>
+        //        {
+        //            detail.ContactId = createdContact.Id;
+        //            detail.CreatedUserId = createdContact.CreatedUserId;
+        //        });
+
+        //        _contactDetailRepo.Insert(details);
+        //        int detailCount = await UnitOfWork.CommitAsync();
+        //        if (detailCount <= 0)
+        //        {
+        //            await transaction.RollbackAsync();
+        //            return new ActionStatus<IContact>(new ResponseVM("DCC0001"));
+        //        }
+
+        //        await transaction.CommitAsync();
+        //        return new ActionStatus<IContact>(true, createdContact);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ActionStatus<IContact>("DPC-CreateContactWithDetails", ex);
+        //    }
+        //}
+
     }
 }
