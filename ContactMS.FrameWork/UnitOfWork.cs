@@ -24,7 +24,7 @@ namespace ContactMS.FrameWork
 
         private readonly ILogger _logger;
 
-        //private IDbContextTransaction? _transaction = null;
+        private IDbContextTransaction? _transaction = null;
 
 
         public UnitOfWork(DbContext dbContext, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
@@ -43,10 +43,15 @@ namespace ContactMS.FrameWork
         //}
 
 
-        //public void BeginTransaction()
+        public void BeginTransaction()
+        {
+            _transaction = _dbContext.Database.BeginTransaction();
+        }
+        //public async Task<IDbContextTransaction> BeginTransactionAsync()
         //{
-        //    _transaction = _dbContext.Database.BeginTransaction();
+        //    return await _dbContext.Database.BeginTransactionAsync();
         //}
+
 
 
         //public int Commit()

@@ -12,7 +12,7 @@ namespace ContactMS.Controllers
     [ApiController]
     public class ContactDetailController : ControllerBase
     {
-        IContactDetailService _contactDetailService;
+        private readonly IContactDetailService _contactDetailService;
         public ContactDetailController(IContactDetailService contactDetailService)
         {
             _contactDetailService = contactDetailService;

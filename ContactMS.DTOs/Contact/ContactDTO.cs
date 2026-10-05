@@ -14,6 +14,9 @@ namespace ContactMS.DTOs.Contact
         public int ActiveStatus { get; set; }
         public long? CreatedUserId { get; set; }
         public long? EditedUserId { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? EditedDate { get; set; }
+
         public List<ContactDetailDTO>? ContactDetails { get; set; }
 
     }

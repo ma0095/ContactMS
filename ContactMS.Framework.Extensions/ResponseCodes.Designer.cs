@@ -70,7 +70,7 @@ namespace ContactMS.Framework.Extensions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to success.
         /// </summary>
         internal static string CCC0001 {
             get {
@@ -129,6 +129,15 @@ namespace ContactMS.Framework.Extensions {
         internal static string CCEE003 {
             get {
                 return ResourceManager.GetString("CCEE003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        internal static string CCG0001 {
+            get {
+                return ResourceManager.GetString("CCG0001", resourceCulture);
             }
         }
         

@@ -62,7 +62,7 @@ POST {{ContactMS_HostAddress}}/api/contact/CreateContactWithDetails
 Content-Type: application/json
 
 {
-  "Name":"abcde",
+  "Name":"test9",
   "ActiveStatus":1,
   "CreatedUserId":1,
   "ContactDetails":
@@ -77,6 +77,19 @@ Content-Type: application/json
      ]
    
   
+}
+
+###
+
+POST {{ContactMS_HostAddress}}/api/contact/GetPaginatedContact
+Content-Type: application/json
+
+{ 
+  "SortColumn":"",
+  "SortDirection":"",
+  "PageSize":10,
+  "Page":1,
+  "SearchTerm":""
 }
 
 ###

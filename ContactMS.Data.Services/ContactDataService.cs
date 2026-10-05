@@ -1,9 +1,10 @@
 ﻿using ContactMS.Data.Contract;
 using ContactMS.Data.Service.Contracts;
+using ContactMS.DTOs;
 using ContactMS.Framework.Data;
+using ContactMS.Framework.Data.Services;
 using ContactMS.Framework.Extensions;
 using Microsoft.EntityFrameworkCore;
-using ContactMS.Framework.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,6 @@ namespace ContactMS.Data.Services
             try
             {
                 IContact data = _contactRepo.Add(requestdata);
-
-
                 int count = await UnitOfWork.CommitAsync();
                 if (count > 0)
                 {
@@ -83,6 +82,26 @@ namespace ContactMS.Data.Services
                 return new ActionStatus<IContact>("DPC-EditContact", ex);
             }
         }
+        public async Task<ActionStatus<List<IContact>>> GetPaginatedContact(PaginationParams pagination)
+        {
+            try
+            {
+                int count = 0;
+                IQueryable<IContact> resultItems = _contactRepo.Entities;
+                count = await resultItems.CountAsync();
+                if (count > 0)
+                {
+                    resultItems = resultItems.OrderByDescending(x => x.Id);
+                    List<IContact> result = await resultItems.Skip((pagination.Page - 1) * pagination.PageSize).Take(pagination.PageSize).ToListAsync();
+                    return new ActionStatus<List<IContact>>(true, result, count);
+                }
+                return new ActionStatus<List<IContact>>(new ResponseVM("0000", "No data"));
+            }
+            catch (Exception ex)
+            {
+                return new ActionStatus<List<IContact>>("ContactDataService GetPaginatedContact", ex);
+            }
+        }
         //public async Task<ActionStatus<IContact>> CreateContactWithDetails(IContact contact, List<IContactDetail> details)
         //{
         //    try
@@ -104,6 +123,8 @@ namespace ContactMS.Data.Services
         //        });
 
         //        _contactDetailRepo.Insert(details);
+        //        //await transaction.RollbackAsync();
+        //        //return new ActionStatus<IContact>(new ResponseVM("DCC0001"));
         //        int detailCount = await UnitOfWork.CommitAsync();
         //        if (detailCount <= 0)
         //        {

@@ -23,6 +23,8 @@ namespace ContactMS.DTO.Mappers.Contact
             entity.ActiveStatus = value.ActiveStatus;
             entity.CreatedUserId = value.CreatedUserId;
             entity.EditedUserId = value.EditedUserId;
+            entity.CreatedDate = value.CreatedDate;
+            entity.EditedDate = value.EditedDate;
             return entity;
         }
 
@@ -34,6 +36,8 @@ namespace ContactMS.DTO.Mappers.Contact
             value.ActiveStatus = entity.ActiveStatus;
             value.CreatedUserId = entity.CreatedUserId;
             value.EditedUserId = entity.EditedUserId;
+            value.CreatedDate = entity.CreatedDate;
+            value.EditedDate = entity.EditedDate;
             return value;
         }
     }

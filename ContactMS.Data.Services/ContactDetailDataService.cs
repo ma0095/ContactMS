@@ -112,6 +112,22 @@ namespace ContactMS.Data.Services
                 return new ActionStatus<List<IContactDetail>>("DPC-GetContactDetailsByContactId", ex);
             }
         }
+        public async Task<ActionStatus<List<IContactDetail>>> GetContactDetailsByContactIds(List<long> contactIds)
+        {
+            try
+            {
+                List<IContactDetail> datas = await _contactDetailRepo.Entities.AsNoTracking().Where(x => contactIds.Contains(x.ContactId)).ToListAsync();
+                if (datas != null)
+                {
+                    return new ActionStatus<List<IContactDetail>>(true, datas);
+                }
+                return new ActionStatus<List<IContactDetail>>(new ResponseVM("DCG0002"));
+            }
+            catch (Exception ex)
+            {
+                return new ActionStatus<List<IContactDetail>>("DPC-GetContactDetailsByContactIds", ex);
+            }
+        }
 
     }
 }

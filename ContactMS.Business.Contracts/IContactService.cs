@@ -1,4 +1,5 @@
-﻿using ContactMS.DTOs.Contact;
+﻿using ContactMS.DTOs;
+using ContactMS.DTOs.Contact;
 using ContactMS.Framework.Extensions;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace ContactMS.Business.Contracts
         Task<ActionStatus<ContactDTO>> CreateContactWithDetails(CreateContactDTO dto);
         Task<ActionStatus<ContactDTO>> EditContact(EditContactDTO dto);
         Task<ActionStatus<ContactDTO>> GetContactById(long id);
+        Task<ActionStatus<List<ContactDTO>>> GetPaginatedContact(PaginationParams pagination);
     }
 }

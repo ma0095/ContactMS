@@ -1,6 +1,7 @@
 ﻿using ContactMS.Business.Contracts;
 using ContactMS.Data.Contract;
 using ContactMS.Data.Service.Contracts;
+using ContactMS.DTOs;
 using ContactMS.DTOs.Contact;
 using ContactMS.DTOs.ContactDetail;
 using ContactMS.Framework.Extensions;
@@ -153,6 +154,58 @@ namespace ContactMS.Business
                 return new ActionStatus<ContactDTO>("BPC-CreateContactWithDetails", ex);
             }
         }
+        public async Task<ActionStatus<List<ContactDTO>>> GetPaginatedContact(PaginationParams pagination)
+        {
+            try
+            {
+                ActionStatus<List<IContact>> response = await _contactDataService.GetPaginatedContact(pagination);
+                if (response)
+                {
+                    List<ContactDTO> contacts = _contactMapper.ToObjects(response.Result).ToList();
+                    List<long> ids = contacts.Select(x => x.Id).ToList();
+                    ActionStatus<List<IContactDetail>> contactDetails = await _contactDetailDataService.GetContactDetailsByContactIds(ids);
+                    if (contactDetails != null)
+                    {
+                        List<ContactDetailDTO> contactDetailsResponse = _contactDetailMapper.ToObjects(contactDetails.Result).ToList();
+                        foreach (var contact in contacts)
+                        {
+                            contact.ContactDetails = contactDetailsResponse.Where(detail => detail.ContactId == contact.Id).ToList();
+                        }
+                    }
+                    return new ActionStatus<List<ContactDTO>>(true, contacts, response.TotalCount);
+                }
+                else
+                {
+                    return new ActionStatus<List<ContactDTO>>(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ActionStatus<List<ContactDTO>>("ContactService GetPaginatedContact", ex);
+            }
+        }
+
+        //public async Task<ActionStatus<ContactDTO>> CreateContactWithDetails(CreateContactDTO dto)
+        //{
+        //    try
+        //    {
+        //        IContact result = _createContactRequestMapper.ToEntity(dto);
+        //        List<IContactDetail> detailmodel = _contactDetailCreateMapper.ToEntities(dto.ContactDetails).ToList();
+
+        //        ActionStatus<IContact> resultEntity = await _contactDataService.CreateContactWithDetails(result, detailmodel);
+               
+        //        if (resultEntity.HasException)
+        //        {
+        //            return new ActionStatus<ContactDTO>(new ResponseVM("BCCE001"));
+        //        }
+
+        //        return new ActionStatus<ContactDTO>(resultEntity);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ActionStatus<ContactDTO>("BPC-CreateContactWithDetails", ex);
+        //    }
+        //}
 
     }
 }

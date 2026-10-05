@@ -1,4 +1,5 @@
 ﻿using ContactMS.Framework.Data.Entities;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,11 @@ namespace ContactMS.Framework.Data
     {
         //IEnumerable<TEntity> Exec<TEntity>(string query, params object[] parameters);
         IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity;
-        //void BeginTransaction();
+        void BeginTransaction();
         //int Commit();
         Task<int> CommitAsync();
         //void Rollback();
+        //Task<IDbContextTransaction> BeginTransactionAsync();
         void Dispose(bool disposing);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ContactMS.Business.Contracts;
+using ContactMS.DTOs;
 using ContactMS.DTOs.Contact;
 using ContactMS.Framework.Extensions;
 using Microsoft.AspNetCore.Http;
@@ -109,6 +110,28 @@ namespace ContactMS.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new ActionStatus(new ResponseVM("CCCE001")));
+            }
+        }
+        [HttpPost]
+        [Route("GetPaginatedContact")]
+        public async Task<IActionResult> GetPaginatedContact(PaginationParams pagination)
+        {
+            try
+            {
+                ActionStatus<List<ContactDTO>> result = await _contactService.GetPaginatedContact(pagination);
+                if (result)
+                {
+                    return Ok(result);
+                }
+                else if (result.HasException)
+                {
+                    return StatusCode(500, new ActionStatus(new ResponseVM("ODGE001")));
+                }
+                return BadRequest(new ActionStatus(result.Response));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ActionStatus(new ResponseVM("ODGE001")));
             }
         }
 

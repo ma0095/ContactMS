@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contact.Data.Contract\ContactMS.Data.Contract.csproj" />
+    <ProjectReference Include="..\ContactMS.DTOs\ContactMS.DTOs.csproj" />
     <ProjectReference Include="..\ContactMS.Framework.Extensions\ContactMS.Framework.Extensions.csproj" />
   </ItemGroup>
 

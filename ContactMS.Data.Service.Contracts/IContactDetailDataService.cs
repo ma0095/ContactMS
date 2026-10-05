@@ -15,5 +15,6 @@ namespace ContactMS.Data.Service.Contracts
         Task<ActionStatus<IContactDetail>> EditContactDetail(IContactDetail result);
         Task<ActionStatus<IContactDetail>> GetContactDetailById(long id);
         Task<ActionStatus<List<IContactDetail>>> GetContactDetailsByContactId(long contactId);
+        Task<ActionStatus<List<IContactDetail>>> GetContactDetailsByContactIds(List<long> ids);
     }
 }
