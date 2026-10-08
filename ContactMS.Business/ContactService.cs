@@ -86,20 +86,20 @@ namespace ContactMS.Business
             try
             {
                 ActionStatus<HierarchyDTO> account = await _hierarchyService.GetHierarchyDetails(token, id);
-                if (!account)
-                {
-                    return new ActionStatus<ContactDTO>(account);
-                }
-                else
-                {
-                    if (account.Result != null)
-                    {
-                        if (!account.Result.ActiveStatus.Equals(1))
-                        {
-                            return new ActionStatus<ContactDTO>(new ResponseVM("HMS0001"));
-                        }
-                    }
-                }
+                //if (!account)
+                //{
+                //    return new ActionStatus<ContactDTO>(account);
+                //}
+                //else
+                //{
+                //    if (account.Result != null)
+                //    {
+                //        if (!account.Result.ActiveStatus.Equals(1))
+                //        {
+                //            return new ActionStatus<ContactDTO>(new ResponseVM("HMS0001"));
+                //        }
+                //    }
+                //}
 
                 ActionStatus<IContact> contact = await _contactDataService.GetContactById(id);
                 if (contact)
@@ -224,7 +224,7 @@ namespace ContactMS.Business
                 ActionStatus<IHierarchyResponse> hierarchyResponse = await _hierarchyService.CreateHierarchy(token, dto.Hierarchy);
                 if (!hierarchyResponse)
                 {
-                    return new ActionStatus<ContactDTO>(hierarchyResponse);
+                    //return new ActionStatus<ContactDTO>(hierarchyResponse);
                 }
 
 
