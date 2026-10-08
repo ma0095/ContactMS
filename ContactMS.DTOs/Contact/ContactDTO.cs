@@ -1,4 +1,5 @@
 ﻿using ContactMS.DTOs.ContactDetail;
+using ContactMS.DTOs.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace ContactMS.DTOs.Contact
         public DateTime? EditedDate { get; set; }
 
         public List<ContactDetailDTO>? ContactDetails { get; set; }
+        public HierarchyResponse? Hierarchy { get; set; }
 
     }
 }

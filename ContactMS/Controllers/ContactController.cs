@@ -4,6 +4,8 @@ using ContactMS.DTOs.Contact;
 using ContactMS.Framework.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace ContactMS.Controllers
 {
@@ -22,6 +24,8 @@ namespace ContactMS.Controllers
         {
             try
             {
+
+
                 ActionStatus<ContactDTO> result = await _contactService.CreateContact(dto);
                 if (result)
                 {
@@ -46,7 +50,11 @@ namespace ContactMS.Controllers
         {
             try
             {
-                ActionStatus<ContactDTO> responsemodel = await _contactService.GetContactById(id);
+                string request = JsonConvert.SerializeObject(id);
+                Microsoft.Extensions.Primitives.StringValues accessToken = Request.Headers["Bearer"];
+                string token = accessToken.ToString();
+
+                ActionStatus<ContactDTO> responsemodel = await _contactService.GetContactById(id, token);
                 if (responsemodel)
                 {
                     responsemodel.Response = new ResponseVM("CCG0001");
@@ -132,6 +140,35 @@ namespace ContactMS.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new ActionStatus(new ResponseVM("ODGE001")));
+            }
+        }
+        // MS - MS create test
+
+        [HttpPost]
+        [Route("CreateContactWithHierarchy")]
+        public async Task<IActionResult> CreateContactWithHierarchy(CreateContactDTO dto)
+        {
+            try
+            {
+                string request = JsonConvert.SerializeObject(dto);
+                Microsoft.Extensions.Primitives.StringValues accessToken = Request.Headers["Bearer"];
+                string token = accessToken.ToString();
+                ActionStatus<ContactDTO> result = await _contactService.CreateContactWithHierarchy(dto, token);
+                if (result)
+                {
+                    result.Response = new ResponseVM("CCC0001");
+                    return Ok(result);
+                }
+                else if (result.HasException)
+                {
+                    return StatusCode(500, new ActionStatus(new ResponseVM("CCCE001")));
+                }
+                return BadRequest(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ActionStatus(new ResponseVM("CCCE001")));
             }
         }
 

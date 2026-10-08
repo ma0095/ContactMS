@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +16,7 @@
     <ProjectReference Include="..\ContactMS.Data.Services\ContactMS.Data.Services.csproj" />
     <ProjectReference Include="..\ContactMS.Data\ContactMS.Data.csproj" />
     <ProjectReference Include="..\ContactMS.DTO.Mappers\ContactMS.DTO.Mappers.csproj" />
+    <ProjectReference Include="..\ContactMS.Service.External\ContactMS.Service.External.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,8 +13,9 @@ namespace ContactMS.Business.Contracts
     {
         Task<ActionStatus<ContactDTO>> CreateContact(CreateContactDTO dto);
         Task<ActionStatus<ContactDTO>> CreateContactWithDetails(CreateContactDTO dto);
+        Task<ActionStatus<ContactDTO>> CreateContactWithHierarchy(CreateContactDTO dto, string token);
         Task<ActionStatus<ContactDTO>> EditContact(EditContactDTO dto);
-        Task<ActionStatus<ContactDTO>> GetContactById(long id);
+        Task<ActionStatus<ContactDTO>> GetContactById(long id, string token);
         Task<ActionStatus<List<ContactDTO>>> GetPaginatedContact(PaginationParams pagination);
     }
 }

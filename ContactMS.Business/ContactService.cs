@@ -4,8 +4,10 @@ using ContactMS.Data.Service.Contracts;
 using ContactMS.DTOs;
 using ContactMS.DTOs.Contact;
 using ContactMS.DTOs.ContactDetail;
+using ContactMS.DTOs.Hierarchy;
 using ContactMS.Framework.Extensions;
 using ContactMS.Framework.Mappers;
+using ContactMS.Service.External.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +18,10 @@ namespace ContactMS.Business
 {
     public class ContactService : IContactService
     {
-        IContactDataService _contactDataService;
-        IContactDetailDataService _contactDetailDataService;
+        private readonly IContactDataService _contactDataService;
+        private readonly IContactDetailDataService _contactDetailDataService;
+        private readonly IHierarchyService _hierarchyService;
+
 
         private readonly APIDataMapper<IContact, ContactDTO> _contactMapper;
         private readonly APIDataMapper<IContact, CreateContactDTO> _createContactRequestMapper;
@@ -27,6 +31,7 @@ namespace ContactMS.Business
 
         public ContactService(IContactDataService contactDataService,
                     IContactDetailDataService contactDetailDataService,
+                    IHierarchyService hierarchyService,
             APIDataMapper<IContact, ContactDTO> contactMapper,
             APIDataMapper<IContact, CreateContactDTO> createContactRequestMapper,
             APIDataMapper<IContact, EditContactDTO> editContactRequestMapper,
@@ -39,6 +44,8 @@ namespace ContactMS.Business
         {
             _contactDataService = contactDataService;
             _contactDetailDataService = contactDetailDataService;
+            _hierarchyService = hierarchyService;
+
             _contactMapper = contactMapper;
             _createContactRequestMapper = createContactRequestMapper;
             _editContactRequestMapper = editContactRequestMapper;
@@ -70,10 +77,26 @@ namespace ContactMS.Business
                 return new ActionStatus<ContactDTO>("BPC-CreateContact", ex);
             }
         }
-        public async Task<ActionStatus<ContactDTO>> GetContactById(long id)
+        public async Task<ActionStatus<ContactDTO>> GetContactById(long id,string token)
         {
             try
             {
+                ActionStatus<HierarchyDTO> account = await _hierarchyService.GetHierarchyDetails(token, id);
+                if (!account)
+                {
+                    return new ActionStatus<ContactDTO>(account);
+                }
+                else
+                {
+                    if (account.Result != null)
+                    {
+                        if (!account.Result.ActiveStatus.Equals(1))
+                        {
+                            return new ActionStatus<ContactDTO>(new ResponseVM("HMS0001"));
+                        }
+                    }
+                }
+
                 ActionStatus<IContact> contact = await _contactDataService.GetContactById(id);
                 if (contact)
                 {
@@ -185,6 +208,38 @@ namespace ContactMS.Business
             }
         }
 
+
+        public async Task<ActionStatus<ContactDTO>> CreateContactWithHierarchy(CreateContactDTO dto, string token)
+        {
+            try
+            {
+                ActionStatus<IHierarchyResponse> hierarchyResponse = await _hierarchyService.CreateHierarchy(token, dto.Hierarchy);
+                if (!hierarchyResponse)
+                {
+                    return new ActionStatus<ContactDTO>(hierarchyResponse);
+                }
+
+
+                IContact result = _createContactRequestMapper.ToEntity(dto);
+                ActionStatus<IContact> data = await _contactDataService.CreateContact(result);
+                if (data)
+                {
+                    ContactDTO response = _contactMapper.ToObject(data.Result);
+                    response.Hierarchy = (HierarchyResponse?)hierarchyResponse.Result;
+                    return new ActionStatus<ContactDTO>(true, response);
+                }
+                else if (data.HasException)
+                {
+                    return new ActionStatus<ContactDTO>(new ResponseVM("BCCE001"));
+                }
+                return new ActionStatus<ContactDTO>(data);
+            }
+            catch (Exception ex)
+            {
+                return new ActionStatus<ContactDTO>("BPC-CreateContact", ex);
+            }
+        }
+
         //public async Task<ActionStatus<ContactDTO>> CreateContactWithDetails(CreateContactDTO dto)
         //{
         //    try
@@ -193,7 +248,7 @@ namespace ContactMS.Business
         //        List<IContactDetail> detailmodel = _contactDetailCreateMapper.ToEntities(dto.ContactDetails).ToList();
 
         //        ActionStatus<IContact> resultEntity = await _contactDataService.CreateContactWithDetails(result, detailmodel);
-               
+
         //        if (resultEntity.HasException)
         //        {
         //            return new ActionStatus<ContactDTO>(new ResponseVM("BCCE001"));

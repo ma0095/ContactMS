@@ -13,6 +13,12 @@ namespace ContactMS.Framework.Extensions
         public ResponseVM? Response { get; set; }
         public Exception? Exception { get; set; }
         public bool HasException => Exception != null;
+
+        // For JSON deserialization
+        public ActionStatus()
+        {
+        }
+
         public ActionStatus(bool isSuccess, ResponseVM response)
         {
             IsSuccess = isSuccess;
@@ -55,7 +61,12 @@ namespace ContactMS.Framework.Extensions
         public T? Result { get; set; }
         
         public int TotalCount { get; set; }
-        
+
+        // For JSON deserialization
+        public ActionStatus()
+        {
+        }
+
         public ActionStatus(bool isSuccess, T result) : base(isSuccess, new ResponseVM("DEFAULT"))
         {
             Result = result;

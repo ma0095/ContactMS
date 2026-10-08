@@ -9,7 +9,7 @@ POST {{ContactMS_HostAddress}}/api/contact/CreateContact
 Content-Type: application/json
 
 {
-  "Name":"test",
+  "Name":"demo1",
   "ActiveStatus":1,
   "CreatedUserId":1
 }
@@ -90,6 +90,33 @@ Content-Type: application/json
   "PageSize":10,
   "Page":1,
   "SearchTerm":""
+}
+
+###
+
+POST {{ContactMS_HostAddress}}/api/contact/CreateContactWithHierarchy
+Content-Type: application/json
+
+{
+  "Name":"demo1",
+  "ActiveStatus":1,
+  "CreatedUserId":1,
+  "Hierarchy":
+  {
+    "agentCode": "M000006",
+   "name": "demo6",
+   "hierarchyTypeId": 107,
+   "solutionPartnerId": 160,
+   "parentId": 162,
+   "externalSystemNumber": null,
+   "shortCode": null,
+   "activeStatus": 1,
+   "createdUserId": 1
+
+  }
+
+
+   
 }
 
 ###

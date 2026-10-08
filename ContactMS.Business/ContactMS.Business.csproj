@@ -15,6 +15,7 @@
     <ProjectReference Include="..\ContactMS.Business.Contracts\ContactMS.Business.Contracts.csproj" />
     <ProjectReference Include="..\ContactMS.Data.Service.Contracts\ContactMS.Data.Service.Contracts.csproj" />
     <ProjectReference Include="..\ContactMS.FrameWork\ContactMS.FrameWork.csproj" />
+    <ProjectReference Include="..\ContactMS.Service.External.Contracts\ContactMS.Service.External.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using ContactMS.DTOs.ContactDetail;
+using ContactMS.DTOs.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace ContactMS.DTOs.Contact
         public int ActiveStatus { get; set; }
         public long? CreatedUserId { get; set; }
         public List<ContactDetailCreateDTO>? ContactDetails { get; set; }
+        public HierarchyCreateRequestDTO? Hierarchy { get; set; }
 
     }
 }
