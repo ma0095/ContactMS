@@ -1,10 +1,11 @@
-﻿using ContactMS.Business.Contracts;
+using ContactMS.Business.Contracts;
 using ContactMS.Data.Contract;
 using ContactMS.Data.Service.Contracts;
 using ContactMS.DTOs.Contact;
 using ContactMS.DTOs.ContactDetail;
 using ContactMS.Framework.Extensions;
 using ContactMS.Framework.Mappers;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +16,21 @@ namespace ContactMS.Business
 {
     public class ContactDetailService : IContactDetailService
     {
-        IContactDetailDataService _contactDetailDataService;
+        private readonly IContactDetailDataService _contactDetailDataService;
+        private readonly ILogger<ContactDetailService> _logger;
         private readonly APIDataMapper<IContactDetail, ContactDetailDTO> _contactDetailMapper;
         private readonly APIDataMapper<IContactDetail, CreateContactDetailDTO> _createContactDetailRequestMapper;
         private readonly APIDataMapper<IContactDetail, EditContactDetailDTO> _editContactDetailRequestMapper;
 
         public ContactDetailService(IContactDetailDataService contactDetailDataService,
+            ILogger<ContactDetailService> logger,
             APIDataMapper<IContactDetail, ContactDetailDTO> contactDetailMapper,
             APIDataMapper<IContactDetail, CreateContactDetailDTO> createContactDetailRequestMapper,
             APIDataMapper<IContactDetail, EditContactDetailDTO> editContactDetailRequestMapper
             )
         {
             _contactDetailDataService = contactDetailDataService;
+            _logger = logger;
             _contactDetailMapper = contactDetailMapper;
             _createContactDetailRequestMapper = createContactDetailRequestMapper;
             _editContactDetailRequestMapper = editContactDetailRequestMapper;
@@ -52,6 +56,7 @@ namespace ContactMS.Business
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception in ContactDetailService.CreateContactDetail");
                 return new ActionStatus<ContactDetailDTO>("BPC-CreateContactDetail", ex);
             }
         }
@@ -73,6 +78,7 @@ namespace ContactMS.Business
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception in ContactDetailService.GetContactDetailById for Id {Id}", id);
                 return new ActionStatus<ContactDetailDTO>("BPC-GetContactDetailById", ex);
             }
         }
@@ -95,10 +101,9 @@ namespace ContactMS.Business
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception in ContactDetailService.EditContactDetail for Id {Id}", requestmodel?.Id);
                 return new ActionStatus<ContactDetailDTO>("BPC-EditContactDetail", ex);
             }
         }
-
-
     }
 }

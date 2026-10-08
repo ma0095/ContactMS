@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ###
 
-GET {{ContactMS_HostAddress}}/api/contact/GetContactById/6
+GET {{ContactMS_HostAddress}}/api/contact/GetContactById/1
 
 ###
 

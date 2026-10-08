@@ -1,4 +1,4 @@
-﻿using ContactMS.Business.Contracts;
+using ContactMS.Business.Contracts;
 using ContactMS.Data.Contract;
 using ContactMS.Data.Service.Contracts;
 using ContactMS.DTOs;
@@ -8,6 +8,7 @@ using ContactMS.DTOs.Hierarchy;
 using ContactMS.Framework.Extensions;
 using ContactMS.Framework.Mappers;
 using ContactMS.Service.External.Contracts;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace ContactMS.Business
         private readonly IContactDataService _contactDataService;
         private readonly IContactDetailDataService _contactDetailDataService;
         private readonly IHierarchyService _hierarchyService;
-
+        private readonly ILogger<ContactService> _logger;
 
         private readonly APIDataMapper<IContact, ContactDTO> _contactMapper;
         private readonly APIDataMapper<IContact, CreateContactDTO> _createContactRequestMapper;
@@ -32,6 +33,7 @@ namespace ContactMS.Business
         public ContactService(IContactDataService contactDataService,
                     IContactDetailDataService contactDetailDataService,
                     IHierarchyService hierarchyService,
+                    ILogger<ContactService> logger,
             APIDataMapper<IContact, ContactDTO> contactMapper,
             APIDataMapper<IContact, CreateContactDTO> createContactRequestMapper,
             APIDataMapper<IContact, EditContactDTO> editContactRequestMapper,
@@ -45,6 +47,7 @@ namespace ContactMS.Business
             _contactDataService = contactDataService;
             _contactDetailDataService = contactDetailDataService;
             _hierarchyService = hierarchyService;
+            _logger = logger;
 
             _contactMapper = contactMapper;
             _createContactRequestMapper = createContactRequestMapper;
@@ -74,6 +77,7 @@ namespace ContactMS.Business
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception in ContactService.CreateContact");
                 return new ActionStatus<ContactDTO>("BPC-CreateContact", ex);
             }
         }
@@ -117,6 +121,7 @@ namespace ContactMS.Business
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception in ContactService.GetContactById for Id {Id}", id);
                 return new ActionStatus<ContactDTO>("BPC-GetContactById", ex);
             }
         }
@@ -139,6 +144,7 @@ namespace ContactMS.Business
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception in ContactService.EditContact for Id {Id}", requestmodel?.Id);
                 return new ActionStatus<ContactDTO>("BPC-EditContact", ex);
             }
         }
@@ -174,6 +180,7 @@ namespace ContactMS.Business
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception in ContactService.CreateContactWithDetails");
                 return new ActionStatus<ContactDTO>("BPC-CreateContactWithDetails", ex);
             }
         }
@@ -204,6 +211,7 @@ namespace ContactMS.Business
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception in ContactService.GetPaginatedContact");
                 return new ActionStatus<List<ContactDTO>>("ContactService GetPaginatedContact", ex);
             }
         }
@@ -236,6 +244,7 @@ namespace ContactMS.Business
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Exception in ContactService.CreateContactWithHierarchy");
                 return new ActionStatus<ContactDTO>("BPC-CreateContact", ex);
             }
         }
